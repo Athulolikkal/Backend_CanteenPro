@@ -50,23 +50,23 @@ export default function authentication(
         }).catch((err) => console.log(err))
 
     }
-    const canteenSignup=(req,res)=>{
-        
-        const {CanteenName,Email,Phonenumber,City,Pincode,Password}= req.body
-        console.log(CanteenName,Email,Phonenumber,City,Pincode,Password,'destructrued data is heree');
-        canteenSignupUsecase(CanteenName,Email,Phonenumber,City,Pincode,Password,authdb,authServices).then((response)=>{
-        console.log(response);
-        res.json(response)
-        }).catch((err)=>console.log(err))
-    }
-    
-    const canteenLogin=(req,res)=>{
-        const {Email,Password}=req.body
-        canteenLoginUsecase(Email,Password,authdb,authServices).then((response)=>{
+    const canteenSignup = (req, res) => {
+
+        const { CanteenName, Email, Phonenumber, City, Pincode, Password } = req.body
+        console.log(CanteenName, Email, Phonenumber, City, Pincode, Password, 'destructrued data is heree');
+        canteenSignupUsecase(CanteenName, Email, Phonenumber, City, Pincode, Password, authdb, authServices).then((response) => {
             console.log(response);
             res.json(response)
-        }).catch((err)=>console.log(err))
-         
+        }).catch((err) => console.log(err))
+    }
+
+    const canteenLogin = (req, res) => {
+        const { Email, Password } = req.body
+        canteenLoginUsecase(Email, Password, authdb, authServices).then((response) => {
+            console.log(response);
+            res.json(response)
+        }).catch((err) => console.log(err))
+
     }
 
     return {

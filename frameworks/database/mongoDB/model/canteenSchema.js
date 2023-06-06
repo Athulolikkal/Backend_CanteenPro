@@ -36,5 +36,7 @@ const canteenSchema = new mongoose.Schema({
     }
 })
 
-const model = mongoose.model('Canteens', canteenSchema);
-export default model;
+const Canteens = mongoose.model('Canteens', canteenSchema);
+export default Canteens;
+// const model = mongoose.model('Canteens', canteenSchema);
+// export default model;
