@@ -3,7 +3,8 @@ import getPackagesOfCanteen from "../../applications/usecases/canteen/packages/g
 import getAllPackagesOfCanteen from '../../applications/usecases/canteen/packages/getAllPackagesOfCanteens.js'
 import getPackagesById from "../../applications/usecases/canteen/packages/getPackageById.js";
 import removePackageById from "../../applications/usecases/canteen/packages/removePackageById.js";
-
+import fetchallpackages from "../../applications/usecases/user/packages/fetchAllPackages.js";
+import fetchPackagesByCategory from '../../applications/usecases/user/packages/fetchPackagesByCategory.js'
 
 export default function packages(
     packagesRepositoriesInterface,
@@ -34,7 +35,7 @@ export default function packages(
     const getAllPackages = (req, res) => {
         console.log('call comes to fetch all packages')
         getAllPackagesOfCanteen(packageDb).then((response) => {
-            console.log(response)
+            
             res.json({ response })
         }).catch((err) => console.log(err))
     }
@@ -48,11 +49,31 @@ export default function packages(
     }
 
     const removePackage = (req, res) => {
-        console.log(req?.query?.id)
+
         removePackageById(req?.query?.id, packageDb).then((response) => {
+
+            res.json(response)
+        }).catch((err) => console.log(err))
+    }
+
+    const fetchAllPackagesforSearch = (req, res) => {
+        const { pageNumber, searchValue } = req?.query
+
+        fetchallpackages(pageNumber, searchValue, packageDb).then((response) => {
+
+            res.json(response)
+        }).catch((err) => console.log(err, 'error happend when fetching all packages'))
+    }
+
+    const fetchByCategory = (req, res) => {
+        const { pagenumber, menu, search } = req?.query
+        fetchPackagesByCategory(pagenumber, menu, search, packageDb).then((response) => {
             console.log(response);
             res.json(response)
         }).catch((err) => console.log(err))
+
+
+
     }
 
     return {
@@ -60,6 +81,9 @@ export default function packages(
         getPackages,
         getAllPackages,
         findPackagebyId,
-        removePackage
+        removePackage,
+        fetchAllPackagesforSearch,
+        fetchByCategory
+
     }
 }

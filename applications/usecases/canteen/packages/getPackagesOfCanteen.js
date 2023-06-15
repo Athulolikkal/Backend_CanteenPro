@@ -11,7 +11,7 @@ export default async function getPackagesOfCanteen(canteenId, packageDb, pageCou
 
         console.log(pageNumber, 'called pagenumber');
         const showPackages = await packageDb.showPackagesOfCanteenbyPagination(canteenId, skipNumber, listLimit)
-        console.log(showPackages);
+       
         const details = {
             showPackages,
             page

@@ -16,7 +16,7 @@ export default async function canteenSignup(CanteenName, Email, Phonenumber, Cit
         const canteenDetails=CanteenEntity(canteen)
         const isCanteen = await authdb.addCanteen(canteenDetails)
        
-       
+        const role='canteen'
         const canteenInfo={
             canteenId:isCanteen?._id,
             canteenName:isCanteen?.canteenName,

@@ -14,13 +14,15 @@ export default function authSerivecs() {
               return isPassword
        }
 
-       const createAccessToken = async (user) => {
-              const accessToken = jwt.sign(user, config.jwtAccessSecretKey, { expiresIn: '15m' })
+       const createAccessToken = async (user, role) => {
+              const secretKey = role === 'canteen' ? config.jwtCanteenAccessSecretKey : config.jwtUserAccessSecretKey
+              const accessToken = jwt.sign(user, secretKey, { expiresIn: '15m' })
               return accessToken
        }
 
-       const createRefreshToken = async (user) => {
-              const refreshToken = jwt.sign(user, config.jwtRefreshSecretKey, { expiresIn: '7d' })
+       const createRefreshToken = async (user, role) => {
+              const secretKey= role ==='canteen'?config.jwtCanteenRefreshSecretKey:config.jwtUserRefreshSecretKey
+              const refreshToken = jwt.sign(user, secretKey, { expiresIn: '7d' })
               return refreshToken
        }
 
