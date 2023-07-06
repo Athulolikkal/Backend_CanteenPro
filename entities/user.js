@@ -5,5 +5,6 @@ export default function user(user) {
         getPhonenumber: () => user?.phonenumber,
         getPassword: () => user?.password,
         getImage: () => user?.image,
+        // getBookingAddress:()=>user?.bookingAddress,
     }
 }

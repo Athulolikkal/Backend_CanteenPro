@@ -4,18 +4,18 @@ import authDbrepositoriesMongoDb from '../../database/mongoDB/repositories/authD
 import authSerivecsImp from '../../service/authServices.js';
 import authServicesInter from '../../../applications/service/authServiceInter.js';
 
-export default function registerRouter(express){
-    const router= express.Router();
+export default function registerRouter(express) {
+    const router = express.Router();
 
-const controller=authController(
-    authDbrepositories,
-    authDbrepositoriesMongoDb,
-    authSerivecsImp,
-    authServicesInter
-)
-   router.route('/').post(controller.registerUser)
-   router.route('/googlesignup').post(controller.googleSignup)
-   router.route('/canteensignup').post(controller.canteenSignup)
+    const controller = authController(
+        authDbrepositories,
+        authDbrepositoriesMongoDb,
+        authSerivecsImp,
+        authServicesInter
+    )
+    router.route('/').post(controller.registerUser)
+    router.route('/googlesignup').post(controller.googleSignup)
+    router.route('/canteensignup').post(controller.canteenSignup)
 
-return router;
+    return router;
 }

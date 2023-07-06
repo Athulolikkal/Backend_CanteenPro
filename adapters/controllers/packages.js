@@ -5,6 +5,9 @@ import getPackagesById from "../../applications/usecases/canteen/packages/getPac
 import removePackageById from "../../applications/usecases/canteen/packages/removePackageById.js";
 import fetchallpackages from "../../applications/usecases/user/packages/fetchAllPackages.js";
 import fetchPackagesByCategory from '../../applications/usecases/user/packages/fetchPackagesByCategory.js'
+import findTotlPackagesOfCanteen from '../../applications/usecases/canteen/packages/totalNumberOfPackagesOfCanteen.js'
+import findPackageDetailsOfCanteen from '../../applications/usecases/canteen/packages/findPackagesCountOfCanteen.js'
+
 
 export default function packages(
     packagesRepositoriesInterface,
@@ -22,26 +25,25 @@ export default function packages(
     }
 
     const getPackages = (req, res) => {
-        console.log(req.query.id, 'callcomes')
-
+        
         const pageNumber = req?.query?.pageNumber || 1
         const canteenId = req?.query?.id
         getPackagesOfCanteen(canteenId, packageDb, pageNumber).then((response) => {
-            console.log(response, 'responseeeeeeeeee')
+            // console.log(response, 'responseeeeeeeeee')
             res.json({ response })
         }).catch((err) => console.log(err))
 
     }
     const getAllPackages = (req, res) => {
-        console.log('call comes to fetch all packages')
+       
         getAllPackagesOfCanteen(packageDb).then((response) => {
-            
+
             res.json({ response })
         }).catch((err) => console.log(err))
     }
 
     const findPackagebyId = (req, res) => {
-        console.log(req?.query?.id, "package id is this ")
+       
         getPackagesById(req?.query?.id, packageDb).then((response) => {
             res.json({ response })
         }).catch((err) => console.log(err))
@@ -71,8 +73,23 @@ export default function packages(
             console.log(response);
             res.json(response)
         }).catch((err) => console.log(err))
+    }
+    
+    const totalNumberOfCanteenPackages=(req,res)=>{
+        const {id}=req?.query
+        console.log(id,'canteenId');
+        findTotlPackagesOfCanteen(id,packageDb).then((response)=>{
+          res.json(response)
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
 
-
+    const getCanteenPackageDetailsForDashboard=(req,res)=>{
+       const {canteenId}=req?.query
+        findPackageDetailsOfCanteen(canteenId,packageDb).then((response)=>{
+           res.json(response)
+        }).catch((err)=>console.log(err))
 
     }
 
@@ -83,7 +100,9 @@ export default function packages(
         findPackagebyId,
         removePackage,
         fetchAllPackagesforSearch,
-        fetchByCategory
-
+        fetchByCategory,
+        totalNumberOfCanteenPackages,
+        getCanteenPackageDetailsForDashboard
+       
     }
 }

@@ -9,11 +9,13 @@ export default async function canteenLoginUsecase(email, password, authdb, authS
             const canteenInfo = {
                 canteenId: isEmail[0]?._id,
                 canteenName: isEmail[0]?.canteenName,
-                email: isEmail[0]?.email
+                email: isEmail[0]?.email,
+                image:isEmail[0]?.image,
+                phone:isEmail[0]?.phonenumber
 
             }
-            const accessToken = await authSerivecs.createAccessToken(canteenInfo, role)
-            const refreshToken = await authSerivecs.createRefreshToken(canteenInfo, role)
+            const accessToken = await authSerivecs.createAccessToken(canteenInfo)
+            const refreshToken = await authSerivecs.createRefreshToken(canteenInfo)
             return ({ status: true, canteenInfo: canteenInfo, canteenAccessToken: accessToken, canteenRefreshtoken: refreshToken })
         }
 

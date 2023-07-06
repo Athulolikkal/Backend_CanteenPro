@@ -1,4 +1,36 @@
 import mongoose from "mongoose";
+
+const addressSchema = new mongoose.Schema({
+    Name: {
+        type: String,
+        required: true
+    },
+    Phonenumber: {
+        type: String,
+        required: true
+    },
+    Building: {
+        type: String,
+        required: true
+    },
+    Street: {
+        type: String,
+        required: true
+    },
+    City: {
+        type: String,
+        required: true
+    },
+    District: {
+        type: String,
+        required: true
+    },
+    Pincode: {
+        type: String,
+        required: true
+    }
+});
+
 const userSchema = new mongoose.Schema({
 
     name: {
@@ -22,6 +54,9 @@ const userSchema = new mongoose.Schema({
     },
     Image: {
         type: String,
+    },
+    bookingAddress: {
+        type: addressSchema
     },
     status: {
         type: Boolean,

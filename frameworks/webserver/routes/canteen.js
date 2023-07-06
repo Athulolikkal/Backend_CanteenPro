@@ -10,6 +10,9 @@ export default function canteenRouter(express) {
         )
 
         router.route('/viewallcanteens').get(controller.viewAllCanteens)
+        router.route('/editprofileimage').patch(controller.editProfileImage)
+        router.route('/canteendetails').get(controller.getCanteenDetails)
+        
 
 
 

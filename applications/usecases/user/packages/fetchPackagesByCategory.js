@@ -1,6 +1,18 @@
 export default async function fecthPackagesByCategory(pagenumber,menu,searchValue,packageDb){
   try{
     // console.log(pagenumber,menu,search);
+   
+    const shuffleArray = (array) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
+    
+   
+   
+   
     const pageNumber=parseInt(pagenumber)
     const categorizedPackages= await packageDb.showCategorizedPackages(menu)
    if(categorizedPackages.numberOfPages>0){
@@ -37,8 +49,9 @@ export default async function fecthPackagesByCategory(pagenumber,menu,searchValu
       return limitedData
   }
   const data = paginatedData(skipNumber, pageLimit)
+  const shuffledData = shuffleArray(data);
     
-   return {showPackages:data,numberOfPages:Pages}
+   return {showPackages:shuffledData,numberOfPages:Pages}
    
 }else{
     return countOfPackages

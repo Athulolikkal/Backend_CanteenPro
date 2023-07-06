@@ -1,13 +1,18 @@
 import addToWishUsecase from "../../applications/usecases/user/wish/addToWish.js";
 import getUserWishesUsecase from "../../applications/usecases/user/wish/getUserWishes.js";
 import removeWishUsecase from "../../applications/usecases/user/wish/removeWish.js";
+import getWishDetailsByIdUseCase from "../../applications/usecases/user/wish/getWishDetailsById.js"
+import paymentUseCase from "../../applications/usecases/common/payment.js";
 
 export default function wishes(
     wishRepositoriesInterface,
-    wishRepositoriesImplements
+    wishRepositoriesImplements,
+    paymentServiceInterface,
+    paymentServicesImplements
 ) {
 
     const wishDb = wishRepositoriesInterface(wishRepositoriesImplements())
+    const paymentServices = paymentServiceInterface(paymentServicesImplements())
 
     const addToWish = (req, res) => {
         const data = req.body;
@@ -35,10 +40,31 @@ export default function wishes(
         }).catch((err) => console.log(err))
 
     }
+    const findWishDetailsById = (req, res) => {
+        const { wishId } = req?.query
+        getWishDetailsByIdUseCase(wishId, wishDb).then((response) => {
+            res.json(response)
+        }).catch((err) => console.log(err))
+
+    }
+    const isPayment = (req, res) => {
+        console.log(req?.body?.totalPayableAmount, 'total payment is this');
+        paymentUseCase(req?.body?.totalPayableAmount, paymentServices).then((response) => {
+            res.json(response)
+        }).catch((err) => console.log(err))
+    }
+    const isPaymentDone=(req,res)=>{
+       console.log(req.body,'data comes');
+        res.json({status:true})
+    }
 
     return {
         addToWish,
         fetchUserwishes,
-        removeWish
+        removeWish,
+        findWishDetailsById,
+        isPayment,
+        isPaymentDone
+
     }
 }

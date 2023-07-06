@@ -4,11 +4,15 @@ export default function wishInterfacerepositories(repositories) {
     const activeWishes = (userId, currentDate) => repositories.activeWishes(userId, currentDate)
     const noLongerWishes = (userId, currentDate) => repositories.noLongerWishes(userId, currentDate)
     const removeItembyId = (wishId) => repositories.removeItembyId(wishId)
+    const getWishById = (wishId) => repositories.getWishById(wishId)
+    const getPackageDetailsById = (wishId) => repositories.getPackageDetailsById(wishId)
     return {
         addWish,
         isSamePackage,
         activeWishes,
         noLongerWishes,
-        removeItembyId
+        removeItembyId,
+        getWishById,
+        getPackageDetailsById
     }
 }

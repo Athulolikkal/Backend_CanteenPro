@@ -21,9 +21,9 @@ export default async function userSignup(email, name, phonenumber, password, aut
             name: isUser?.name,
             email: isUser?.email
         }
-        const role = 'user'
-        const accessToken = await authSerivecs.createAccessToken(registeredUser,role)
-        const refreshToken = await authSerivecs.createRefreshToken(registeredUser,role)
+        // const role = 'user'
+        const accessToken = await authSerivecs.createAccessToken(registeredUser)
+        const refreshToken = await authSerivecs.createRefreshToken(registeredUser)
        
         return ({ status: true, accessToken: accessToken, refreshToken: refreshToken,userInfo:registeredUser });
     }

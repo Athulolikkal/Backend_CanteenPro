@@ -88,20 +88,37 @@ export default function wishDbrepositories() {
 
     const removeItembyId = async (id) => {
         try {
-            const removeWish =await wishSchema.findByIdAndDelete(id)
+            const removeWish = await wishSchema.findByIdAndDelete(id)
             return removeWish
         } catch (err) {
             console.log(err);
         }
     }
+    const getWishById = async (id) => {
+        try {
+            const findUserWish = await wishSchema.findById(id)
+            return findUserWish
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
-
+    const getPackageDetailsById = async (wishId) => {
+        try {
+            const getPackageDetails = await wishSchema.findById(wishId).populate('packageId')
+            return getPackageDetails
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return {
         addWish,
         isSamePackage,
         activeWishes,
         noLongerWishes,
-        removeItembyId
+        removeItembyId,
+        getWishById,
+        getPackageDetailsById
     }
 }

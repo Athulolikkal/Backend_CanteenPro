@@ -92,58 +92,18 @@ export default function packagesDbrepositories() {
             console.log(err);
         }
     };
-    //-----------------------------------------------------------------
 
-    // const showCategorizedPackages = async (skip, limit, menu, search) => {
-    //     try {
-    //         console.log('Menu:', menu);
-    //         console.log('Search:', typeof search);
-
-    //         const query = { [menu]: { $exists: true }, status: true  };
-    //         const searchQuery = {};
-
-    //         if (search) {
-
-    //             searchQuery.$or = [
-    //                 { 'canteenId.canteenName': { $regex: search, $options: 'i' } },
-    //                 { 'canteenId.city': { $regex: search, $options: 'i' } },
-    //                 { [`${menu}.mainCourse`]: { $regex: search, $options: 'i' } },
-    //                 { [`${menu}.sideCourse`]: { $regex: search, $options: 'i' } },
-    //                 { [`${menu}.specials`]: { $regex: search, $options: 'i' } },
-    //                 { [`${menu}.availableTime`]: { $regex: search, $options: 'i' } },
-    //                 { 'category': { $regex: search, $options: 'i' } },
-    //                 { [`${menu}.ratePerDay`]: parseInt(search) },
-    //                 { [`${menu}.ratePerMonth`]: parseInt(search) },
-    //             ];
-    //         }
-
-    //         console.log('Menu:', menu);
-    //         console.log('Search:', search);
-
-    //         const numberOfPages = await packageSchema
-    //             .find({ $and: [query, searchQuery] })
-    //             .count();
-
-    //         const showPackages = await packageSchema
-    //             .find({ $and: [query, searchQuery] })
-    //             .select({ [menu]: 1, _id: 1, image: 1, category: 1, status: 1 })
-    //             .populate('canteenId', 'city canteenName email pincode')
-    //             .skip(skip)
-    //             .limit(limit);
-
-    //         return {showPackages,numberOfPages};
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
+    const getTotalNumberOfCanteenPackages = async(id) => {
+        try {
+       
+            const total= await packageSchema.find({canteenId:id,status:true}).count()
+             return total
+        } catch (err) {
+            console.log(err);
+        }
 
 
-    //---------------------------------------
-
-
-
-
-
+    }
 
 
     return {
@@ -154,6 +114,7 @@ export default function packagesDbrepositories() {
         removePackagebyId,
         showPackagesOfCanteenbyPagination,
         totalPackageCount,
-        showCategorizedPackages
+        showCategorizedPackages,
+        getTotalNumberOfCanteenPackages
     }
 }

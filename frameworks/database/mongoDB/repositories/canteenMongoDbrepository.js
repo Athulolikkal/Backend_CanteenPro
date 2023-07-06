@@ -17,9 +17,30 @@ export default function canteenImplementsMongoDb() {
         }
     }
 
+    const editUserProfile = async (url, id) => {
+        try {
+            const isEdit = await canteenSchema.findByIdAndUpdate(id, { image: url });
+            return isEdit
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const findCanteenById = async (id) => {
+        try {
+            const canteen = await canteenSchema.findById(id)
+            return canteen
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return {
         countOfCanteens,
-        allCanteens
+        allCanteens,
+        editUserProfile,
+        findCanteenById
+
+
     }
 }

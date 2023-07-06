@@ -7,12 +7,12 @@ dotenv.config();
 
 export default async function fileUpload() {
   const region = 'ap-south-1';
-  const bucketName = 'project-video';
-  
+  const bucketName = 'canteenpro.image';
+
   const accessKeyId = process.env.ACCESSKEY_S3_SECERET;
   const secretAccessKey = process.env.SECRETKEY_S3;
- 
-const s3Client = new S3Client({
+
+  const s3Client = new S3Client({
     region,
     credentials: {
       accessKeyId,
@@ -22,7 +22,7 @@ const s3Client = new S3Client({
 
   const rowBytes = await randomBytes(16)
 
-  const imageName =rowBytes.toString('hex');
+  const imageName = rowBytes.toString('hex');
   const command = new PutObjectCommand({
     Bucket: bucketName,
     Key: imageName,

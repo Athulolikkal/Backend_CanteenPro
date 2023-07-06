@@ -7,6 +7,7 @@ export default function packageInterfacerepositories(repositories) {
     const showPackagesOfCanteenbyPagination = (canteenId, skipnumber, limit) => repositories.showPackagesOfCanteenbyPagination(canteenId, skipnumber, limit)
     const totalPackageCount = () => repositories.totalPackageCount()
     const showCategorizedPackages = (skip, limit, menu, search) => repositories.showCategorizedPackages(skip, limit, menu, search)
+    const getTotalNumberOfCanteenPackages = (id) => repositories.getTotalNumberOfCanteenPackages(id)
     return {
         addPackages,
         getPackage,
@@ -15,6 +16,7 @@ export default function packageInterfacerepositories(repositories) {
         removePackagebyId,
         showPackagesOfCanteenbyPagination,
         totalPackageCount,
-        showCategorizedPackages
+        showCategorizedPackages,
+        getTotalNumberOfCanteenPackages
     }
 }

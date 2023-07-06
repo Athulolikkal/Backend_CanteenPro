@@ -14,23 +14,29 @@ export default function authSerivecs() {
               return isPassword
        }
 
-       const createAccessToken = async (user, role) => {
-              const secretKey = role === 'canteen' ? config.jwtCanteenAccessSecretKey : config.jwtUserAccessSecretKey
-              const accessToken = jwt.sign(user, secretKey, { expiresIn: '15m' })
+       const createAccessToken = async (user) => {
+              // const secretKey = role === 'canteen' ? config.jwtCanteenAccessSecretKey : config.jwtUserAccessSecretKey
+              const accessToken = jwt.sign(user, config.jwtAccessSecretKey, { expiresIn: '60m' })
               return accessToken
        }
 
-       const createRefreshToken = async (user, role) => {
-              const secretKey= role ==='canteen'?config.jwtCanteenRefreshSecretKey:config.jwtUserRefreshSecretKey
-              const refreshToken = jwt.sign(user, secretKey, { expiresIn: '7d' })
+       const createRefreshToken = async (user) => {
+              // const secretKey= role ==='canteen'?config.jwtCanteenRefreshSecretKey:config.jwtUserRefreshSecretKey
+              const refreshToken = jwt.sign(user, config.jwtRefreshSecretKey, { expiresIn: '7d' })
               return refreshToken
+       }
+
+       const verifyAccessToken = async (tokendata) => {
+              const isVerified = await jwt.verify(tokendata, config.jwtAccessSecretKey)
+              return isVerified
        }
 
        return {
               passwordBcrypt,
               comparePassword,
               createAccessToken,
-              createRefreshToken
+              createRefreshToken,
+              verifyAccessToken
 
        }
 }
