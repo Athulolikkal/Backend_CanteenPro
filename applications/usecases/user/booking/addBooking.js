@@ -8,7 +8,7 @@ export default async function addBooking(wish, wishId, bookingDb, wishDb, userDb
         wish.userAddress=userAddress
         const bookingDetails = bookingEntity(wish);
         console.log(userAddress, 'userAddress is this');
-        const activeBookings = await bookingDb.findActiveBookings(wish?.userId)
+        const activeBookings = await bookingDb.findActiveBookings(wish?.userId,wish?.EndDate)
         console.log(activeBookings, 'activebookings');
         if (activeBookings <= 4) {
             const isItemBooked = await bookingDb.insertBooking(bookingDetails)

@@ -13,5 +13,7 @@ export default function userRouter(express) {
 
     router.route('/adduseraddress').put(controller.addUserBookingAddress)
     router.route('/userdata').get(controller.getUserData)
+    router.route('/addtowallet').put(controller.addToUserWallet)
+    router.route('/updateprofileimage').put(controller.updateProfileImage)
     return router
 }

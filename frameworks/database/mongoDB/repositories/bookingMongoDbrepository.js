@@ -31,12 +31,13 @@ export default function bookingImplementsMongoDb() {
         }
     }
 
-    const findActiveBookings = (id) => {
+    const findActiveBookings = (id, date) => {
         try {
             const activeBookingCount = bookingSchema.find({
                 userId: new ObjectId(id),
                 status: true,
-                booked: true
+                booked: true,
+                // endDate: { $gte: date}
             }).countDocuments().exec();
             return activeBookingCount;
         } catch (err) {
@@ -73,12 +74,12 @@ export default function bookingImplementsMongoDb() {
 
     const AllBookingsCustomized = (name, category) => {
         try {
-          
+
             const customizedBookings = bookingSchema.find({
                 $and: [
                     { [`${category}.canteenName`]: name },
                     { booked: true },
-                    {status:true}
+                    // { status: true }
                 ]
             }).select({ [category]: 1, _id: 1, bookingAmount: 1, endDate: 1, startDate: 1, bookingAddress: 1, source: 1 })
             return customizedBookings
@@ -89,12 +90,12 @@ export default function bookingImplementsMongoDb() {
     }
     const AllBookingsOfPackages = (id) => {
         try {
-            
+
             const customizedBookings = bookingSchema.find({
                 $and: [
-                    { canteenId: id},
+                    { canteenId: id },
                     { booked: true },
-                    {status:true}
+                    // { status: true }
                 ]
             }).select({ _id: 1, bookingAmount: 1, endDate: 1, startDate: 1, bookingAddress: 1, source: 1 })
             return customizedBookings
@@ -123,6 +124,52 @@ export default function bookingImplementsMongoDb() {
         }
     }
 
+    const allUserBookings = async (id) => {
+        try {
+            const allBookings = await bookingSchema.find({ userId: id })
+            return allBookings
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const getBookingById = async (packageId) => {
+        try {
+            const fetchBooking = await bookingSchema.findById(packageId)
+            return fetchBooking
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const findByIdAndRenewBooking = async (bookingId, bookingAmount, totalDays, newEndDate) => {
+        try {
+            console.log(newEndDate);
+            const renewBooking = await bookingSchema.findByIdAndUpdate(bookingId, { bookingAmount: bookingAmount, totalDays: totalDays, endDate: newEndDate })
+            await renewBooking.save();
+            return renewBooking
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const findByIdAndRenewNonActiveBooking = async (bookingId, bookingAmount, totalDays, newEndDate, newStartDate) => {
+        try {
+            console.log(newEndDate);
+            const renewBooking = await bookingSchema.findByIdAndUpdate(bookingId, { bookingAmount: bookingAmount, totalDays: totalDays, endDate: newEndDate, startDate: newStartDate,cancelled:false })
+            await renewBooking.save();
+            return renewBooking
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const cancelUserBooking=async(bookingId, newTotalDays,newEndDate,newBookingAmount)=>{
+        try{
+         const userBookingCancel = await bookingSchema.findByIdAndUpdate(bookingId,{bookingAmount:newBookingAmount,totalDays:newTotalDays,endDate:newEndDate,cancelled:true})
+         return userBookingCancel
+        }catch(err){
+            console.log(err);
+        }
+    }
 
     return {
         insertBooking,
@@ -131,7 +178,12 @@ export default function bookingImplementsMongoDb() {
         findBookingsCustomized,
         bookedItemsFromPackage,
         AllBookingsCustomized,
-        AllBookingsOfPackages
+        AllBookingsOfPackages,
+        allUserBookings,
+        getBookingById,
+        findByIdAndRenewBooking,
+        findByIdAndRenewNonActiveBooking,
+        cancelUserBooking
 
     }
 

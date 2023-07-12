@@ -85,6 +85,10 @@ const bookingSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    cancelled: {
+        type: Boolean,
+        default: false
+    },
     breakfast: {
         mainCourse: {
             type: [String],

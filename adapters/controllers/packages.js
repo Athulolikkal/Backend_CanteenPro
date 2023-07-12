@@ -7,7 +7,7 @@ import fetchallpackages from "../../applications/usecases/user/packages/fetchAll
 import fetchPackagesByCategory from '../../applications/usecases/user/packages/fetchPackagesByCategory.js'
 import findTotlPackagesOfCanteen from '../../applications/usecases/canteen/packages/totalNumberOfPackagesOfCanteen.js'
 import findPackageDetailsOfCanteen from '../../applications/usecases/canteen/packages/findPackagesCountOfCanteen.js'
-
+import addReviewUsecase from "../../applications/usecases/user/packages/addReview.js";
 
 export default function packages(
     packagesRepositoriesInterface,
@@ -25,7 +25,7 @@ export default function packages(
     }
 
     const getPackages = (req, res) => {
-        
+
         const pageNumber = req?.query?.pageNumber || 1
         const canteenId = req?.query?.id
         getPackagesOfCanteen(canteenId, packageDb, pageNumber).then((response) => {
@@ -35,7 +35,7 @@ export default function packages(
 
     }
     const getAllPackages = (req, res) => {
-       
+
         getAllPackagesOfCanteen(packageDb).then((response) => {
 
             res.json({ response })
@@ -43,7 +43,7 @@ export default function packages(
     }
 
     const findPackagebyId = (req, res) => {
-       
+
         getPackagesById(req?.query?.id, packageDb).then((response) => {
             res.json({ response })
         }).catch((err) => console.log(err))
@@ -74,23 +74,30 @@ export default function packages(
             res.json(response)
         }).catch((err) => console.log(err))
     }
-    
-    const totalNumberOfCanteenPackages=(req,res)=>{
-        const {id}=req?.query
-        console.log(id,'canteenId');
-        findTotlPackagesOfCanteen(id,packageDb).then((response)=>{
-          res.json(response)
-        }).catch((err)=>{
+
+    const totalNumberOfCanteenPackages = (req, res) => {
+        const { id } = req?.query
+        console.log(id, 'canteenId');
+        findTotlPackagesOfCanteen(id, packageDb).then((response) => {
+            res.json(response)
+        }).catch((err) => {
             console.log(err);
         })
     }
 
-    const getCanteenPackageDetailsForDashboard=(req,res)=>{
-       const {canteenId}=req?.query
-        findPackageDetailsOfCanteen(canteenId,packageDb).then((response)=>{
-           res.json(response)
-        }).catch((err)=>console.log(err))
+    const getCanteenPackageDetailsForDashboard = (req, res) => {
+        const { canteenId } = req?.query
+        findPackageDetailsOfCanteen(canteenId, packageDb).then((response) => {
+            res.json(response)
+        }).catch((err) => console.log(err))
 
+    }
+
+    const addUserReview = (req, res) => {
+        const { userId, packageId,username,message } = req?.body
+        addReviewUsecase(userId, packageId,username,message,packageDb).then((response) => {
+            res.json(response)
+        }).catch((err) => console.log(err))
     }
 
     return {
@@ -102,7 +109,8 @@ export default function packages(
         fetchAllPackagesforSearch,
         fetchByCategory,
         totalNumberOfCanteenPackages,
-        getCanteenPackageDetailsForDashboard
-       
+        getCanteenPackageDetailsForDashboard,
+        addUserReview
+
     }
 }

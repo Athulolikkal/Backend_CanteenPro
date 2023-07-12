@@ -22,9 +22,27 @@ export default function userImplementsMongoDb() {
         }
     }
 
+    const addToWallet = async (userId, currentWallentAmount) => {
+        try {
+            const toWallet = await userSchema.findByIdAndUpdate(userId, { wallet: currentWallentAmount })
+            return toWallet
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const updateImage = async (userId, imageUrl) => {
+        try {
+         const updateUserProfile= await userSchema.findByIdAndUpdate(userId,{image:imageUrl})
+         return updateUserProfile
+        } catch (err) {
+            console.log(err);
+        }
+    }
     return {
         addBookingAddress,
-        getUserData
+        getUserData,
+        addToWallet,
+        updateImage
     }
 
 

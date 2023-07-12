@@ -7,14 +7,11 @@ export default function canteenRouter(express) {
     const controller = canteenController(
         canteenMongoInterface,
         canteenMongoDbImplements
-        )
+    )
 
-        router.route('/viewallcanteens').get(controller.viewAllCanteens)
-        router.route('/editprofileimage').patch(controller.editProfileImage)
-        router.route('/canteendetails').get(controller.getCanteenDetails)
-        
-
-
-
+    router.route('/viewallcanteens').get(controller.viewAllCanteens)
+    router.route('/editprofileimage').patch(controller.editProfileImage)
+    router.route('/canteendetails').get(controller.getCanteenDetails)
+   
     return router
 }

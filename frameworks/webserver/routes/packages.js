@@ -20,5 +20,6 @@ export default function packageRouter(express) {
   router.route('/customisepackage').get(jwtAuthentication, controller.fetchByCategory)
   router.route('/canteentotalpackages').get(controller.totalNumberOfCanteenPackages)
   router.route('/totalpackagedetails').get(controller.getCanteenPackageDetailsForDashboard)
+  router.route('/addreview').post(controller.addUserReview)
   return router;
 }

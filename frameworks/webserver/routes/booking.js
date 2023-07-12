@@ -24,5 +24,8 @@ export default function bookingRouter(express) {
     router.route('/confirmbooking').patch(controller.confirmbooking)
     router.route('/getAllbooking').get(jwtAuthenticationCanteen,controller.getAllBookingOfCanteen)
     router.route('/dashboarddetails').get(jwtAuthenticationCanteen,controller.getDetails)
+    router.route('/getalluserbooking').get(controller.getAllBookingsOfUser)
+    router.route('/renewbooking').post(controller.reNewBooking)
+    router.route('/cancelbooking').post(controller.cancelBooking)
     return router;
 }

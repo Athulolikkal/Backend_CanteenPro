@@ -28,7 +28,7 @@ const addressSchema = new mongoose.Schema({
     Pincode: {
         type: String,
         required: true
-    }
+    },
 });
 
 const userSchema = new mongoose.Schema({
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
         type: String,
 
     },
-    Image: {
+    image: {
         type: String,
     },
     bookingAddress: {
@@ -61,6 +61,10 @@ const userSchema = new mongoose.Schema({
     status: {
         type: Boolean,
         default: true
+    },
+    wallet:{
+        type:Number,
+        default:0
     }
 })
 

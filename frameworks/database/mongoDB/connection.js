@@ -1,5 +1,6 @@
     export default function connection(mongoose,config){
          function connectToMongo(){
+          
             mongoose.connect(config.mongo.uri).
             then(()=>{
                 console.log('mongosee connect')

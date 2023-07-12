@@ -1,6 +1,24 @@
 import mongoose from "mongoose";
 import canteenSchema from './canteenSchema.js'
 
+
+const reviewSchema = new mongoose.Schema({
+    userName: {
+        type: String,
+        required: true
+    },
+    userId: {
+        type: String,
+        required: true
+    },
+    review: {
+        type: String,
+        required: true
+    },
+});
+
+
+
 const packageSchema = new mongoose.Schema({
 
     breakfast: {
@@ -83,7 +101,9 @@ const packageSchema = new mongoose.Schema({
     }, rating: {
         type: Number,
     },
-    review: [String],
+    review:{
+        type:[reviewSchema]
+    },
     canteenId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Canteens',

@@ -93,19 +93,34 @@ export default function packagesDbrepositories() {
         }
     };
 
-    const getTotalNumberOfCanteenPackages = async(id) => {
+    const getTotalNumberOfCanteenPackages = async (id) => {
         try {
-       
-            const total= await packageSchema.find({canteenId:id,status:true}).count()
-             return total
+
+            const total = await packageSchema.find({ canteenId: id, status: true }).count()
+            return total
         } catch (err) {
             console.log(err);
         }
-
-
     }
 
-
+    const findUserReviewInPackage = async (userId, packageId) => {
+        try {
+            const isUserHaveReview = await packageSchema.findOne({ _id: packageId, review: { $elemMatch: { userId: userId } } })
+            return isUserHaveReview
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const addUserReview = async (packageId, newReview) => {
+        try {
+         const addReview= await packageSchema.findByIdAndUpdate(packageId,{$push:{review:newReview}})
+         console.log(addReview);
+         return addReview
+        } catch (err) {
+         console.log(err);
+        }
+    }
+   
     return {
         addPackages,
         getPackage,
@@ -115,6 +130,8 @@ export default function packagesDbrepositories() {
         showPackagesOfCanteenbyPagination,
         totalPackageCount,
         showCategorizedPackages,
-        getTotalNumberOfCanteenPackages
+        getTotalNumberOfCanteenPackages,
+        findUserReviewInPackage,
+        addUserReview
     }
 }

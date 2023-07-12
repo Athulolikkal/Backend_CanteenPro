@@ -48,8 +48,10 @@ export default function wishes(
 
     }
     const isPayment = (req, res) => {
-        console.log(req?.body?.totalPayableAmount, 'total payment is this');
-        paymentUseCase(req?.body?.totalPayableAmount, paymentServices).then((response) => {
+       
+        const payableAmount=parseInt(req?.body?.totalPayableAmount)
+        console.log(payableAmount, 'total payment is this');
+        paymentUseCase(payableAmount, paymentServices).then((response) => {
             res.json(response)
         }).catch((err) => console.log(err))
     }
